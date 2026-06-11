@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Pensamiento Estratégico</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00323c 0%, #001f29 100%);
+            min-height: 100vh;
+            padding: 40px 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .instruccion {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+            padding: 16px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            display: inline-block;
+            width: 100%;
+            max-width: 600px;
+            font-family: Poppins;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 35px;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 340px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateX(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 3px solid #00323c;
+        }
+
+        .flip-card-front .title {
+            font-size: 1.1em;
+            font-weight: 900;
+            color: #00323c;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .flip-card-front .hint {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(145deg, #00323c, #00212d);
+            color: #fff;
+            transform: rotateX(180deg);
+            box-shadow: 0 10px 30px rgba(0, 50, 60, 0.5);
+        }
+
+        .flip-card-back .title {
+            font-size: 1em;
+            font-weight: 900;
+            margin-bottom: 12px;
+            color: #ffffff;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+            width: 100%;
+            font-family: Poppins;
+        }
+
+        .flip-card-back p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: left;
+            font-family: Poppins;
+        }
+
+        .flip-card-back p.ultimo {
+            font-size: 0.95rem;
+            /* o el tamaño que desees */
+            line-height: 1.4;
+        }
+
+
+
+        /* ===== ICONOS MODERNOS ===== */
+
+        .icon-modern {
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+
+            background: linear-gradient(145deg,
+                    #0d5665,
+                    #00323c);
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 12px 25px rgba(0, 0, 0, .20),
+                inset 0 2px 6px rgba(255, 255, 255, .15);
+
+            transform:
+                rotateX(-12deg) rotateY(12deg);
+
+            transition: all .35s ease;
+        }
+
+        .icon-modern i {
+            font-size: 42px;
+            color: #ffffff;
+        }
+
+        .flip-card:hover .icon-modern {
+            transform:
+                rotateX(-12deg) rotateY(12deg) scale(1.08);
+
+            box-shadow:
+                0 18px 35px rgba(0, 0, 0, .30),
+                inset 0 2px 8px rgba(255, 255, 255, .20);
+        }
+
+
+        /* Responsive para tablets */
+        @media (max-width: 1200px) {
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 600px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .flip-card {
+                height: 320px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <p class="instruccion">Pasa el mouse sobre las tarjetas para ver más información</p>
+
+    <div class="cards-container">
+
+        <!-- Tarjeta 1: Atraer diferentes tipos de pensamiento -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="icon-modern">
+                        <i class="fa-solid fa-brain"></i>
+
+                    </div>
+                    <p class="title">Atraer diferentes tipos de contenidos de Pensamientos</p>
+
+                </div>
+                <div class="flip-card-back">
+
+                    <p>Se relaciona con la planificación estratégica como un medio de eficacia para que una persona
+                        puede cambiar y explorar la información desde diferentes perspectivas y concepciones
+                        intelectuales con respecto a un objetivo y su modo de consolidarlo para hacerlo real.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 2: Anticipación -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="icon-modern">
+                        <i class="fa-solid fa-binoculars"></i>
+                    </div>
+                    <p class="title">Anticipación</p>
+
+                </div>
+                <div class="flip-card-back">
+
+                    <p>Se entiende como la capacidad de predecir el futuro a partir de los datos de referencia y las
+                        tendencias actuales. Se convierte en una de las principales habilidades de un estratega.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 3: Fijación de objetivos -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="icon-modern">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <p class="title">Fijación de Objetivos</p>
+
+                </div>
+                <div class="flip-card-back">
+
+                    <p>La estrategia debe ser una herramienta útil para la obtención del objetivo central, priorizando
+                        aquello que tiene mayor nivel de importancia para alcanzar los resultados esperados.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 4: Flexibilidad de pensamiento -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="icon-modern">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </div>
+                    <p class="title">Flexibilidad</p>
+
+                </div>
+                <div class="flip-card-back">
+
+                    <p>Un estratega no es alguien que se fija un objetivo y trata de alcanzarlo a cualquier precio. Se
+                        adapta a los cambios en el momento oportuno y realiza los ajustes necesarios de manera
+                        inmediata.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 5: Sensibilidad -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="icon-modern">
+                        <i class="fa-solid fa-tower-broadcast"></i>
+                    </div>
+                    <p class="title">Sensibilidad</p>
+
+                </div>
+                <div class="flip-card-back">
+
+                    <p>Un estratega debe absorber la información como una esponja. Es importante utilizar diversas
+                        fuentes, comparar datos, analizarlos y extraer conclusiones que permitan una mejor toma de
+                        decisiones.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 6: Aprendizaje continuo -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="icon-modern">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <p class="title">Aprendizaje Continuo</p>
+
+                </div>
+                <div class="flip-card-back">
+
+                    <p>Así como importa lo que se estudia, también es fundamental que sea un proceso continuo de
+                        entrenamiento del cerebro, fortaleciendo conocimientos y habilidades de forma permanente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 7: Objetividad -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="icon-modern">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <p class="title">Objetividad</p>
+
+                </div>
+                <div class="flip-card-back">
+
+                    <p>Un estratega debe deshacerse de los prejuicios y las convenciones. Su tarea es percibir la
+                        información en su forma más pura y reaccionar ante los acontecimientos como un observador
+                        imparcial.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 8: Descanso -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="icon-modern ">
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                    <p class="title">Descanso</p>
+
+                </div>
+                <div class="flip-card-back">
+
+                    <p class="ultimo">El continuo estrés intelectual puede conducir al agotamiento. Para mantener la
+                        salud mental y una mente clara, es necesario pasar de la actividad mental a la actividad física.
+                        Ponerse en forma, salir a pasear, jugar al aire libre, ir de excursión… todo esto ayuda a
+                        recargar la energía y a mantener la motivación. El descanso también puede ser pasivo: los
+                        empresarios serios leen ficción, disfrutan de juegos de ordenador sin complicaciones, toman el
+                        sol en la playa, etc. (Cesuma, 2025).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
